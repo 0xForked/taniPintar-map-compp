@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String status = "setPosition";
-//                String latitude = "2.9321494";
-//                String longitude = "122.8962316";
                 String latitude = mLatInit.getText().toString();
                 String longitude = mLonInit.getText().toString();
                 MapsActivity.start(MainActivity.this, status, latitude, longitude);
@@ -177,6 +175,18 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppPrefs appPrefs = AppPrefs.getInstance(MainActivity.this);
+        String lat = appPrefs.getData("PREF_LAT");
+        String lon = appPrefs.getData("PREF_LON");
+        String address =appPrefs.getData("PREF_ADDRESS");
+        mLat.setText(lat);
+        mLon.setText(lon);
+        mAddress.setText(address);
     }
 
 }
