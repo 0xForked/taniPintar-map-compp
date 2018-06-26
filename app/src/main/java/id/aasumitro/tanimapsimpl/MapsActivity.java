@@ -114,17 +114,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Double selectedLat = marketLocation.latitude;
                         Double selectedLon =marketLocation.longitude;
 
+                        AppPrefs appPrefs = AppPrefs.getInstance(MapsActivity.this);
+
+                        mLat.setText(String.valueOf(selectedLat));
+                        mLon.setText(String.valueOf(selectedLon));
+
                         try {
                             Geocoder geo = new Geocoder(MapsActivity.this, Locale.getDefault());
                             List<Address> address = geo.getFromLocation(selectedLat, selectedLon, 1);
                             String addresses = address.get(0).getAddressLine(0);
                             mAddress.setText(addresses);
+
+                            appPrefs.saveData("PREF_LAT",String.valueOf(selectedLat));
+                            appPrefs.saveData("PREF_LON",String.valueOf(selectedLon));
+                            appPrefs.saveData("PREF_ADDRESS",String.valueOf(addresses));
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
-                        mLat.setText(String.valueOf(selectedLat));
-                        mLon.setText(String.valueOf(selectedLon));
 
                     }
                 });
